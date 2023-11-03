@@ -38,6 +38,7 @@ class Network(object):
                  font_color=False,
                  layout=None,
                  heading="",
+                 subheading="",
                  cdn_resources="local"):
         """
         :param height: The height of the canvas
@@ -72,6 +73,7 @@ class Network(object):
         self.height = height
         self.width = width
         self.heading = heading
+        self.subheading = subheading
         self.html = ""
         self.shape = "dot"
         self.font_color = font_color
@@ -421,11 +423,11 @@ class Network(object):
         >>> nodes, edges, heading, height, width, options = net.get_network_data()
         """
         if isinstance(self.options, dict):
-            return (self.nodes, self.edges, self.heading, self.height,
-                    self.width, json.dumps(self.options))
+            return (self.nodes, self.edges, self.heading, self.subheading,
+                    self.height, self.width, json.dumps(self.options))
         else:
-            return (self.nodes, self.edges, self.heading, self.height,
-                    self.width, self.options.to_json())
+            return (self.nodes, self.edges, self.heading, self.subheading,
+                    self.height, self.width, self.options.to_json())
 
     def save_graph(self, name):
         """
@@ -465,7 +467,7 @@ class Network(object):
         else:
             template = self.template
 
-        nodes, edges, heading, height, width, options = self.get_network_data()
+        nodes, edges, heading, subheading, height, width, options = self.get_network_data()
 
         # check if physics is enabled
         if isinstance(self.options, dict):
@@ -481,6 +483,7 @@ class Network(object):
                                     nodes=nodes,
                                     edges=edges,
                                     heading=heading,
+                                    subheading=subheading,
                                     options=options,
                                     physics_enabled=physics_enabled,
                                     use_DOT=self.use_DOT,
